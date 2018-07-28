@@ -920,20 +920,6 @@ static int write_xconfig(Options *op, XConfigPtr config, int first_touch)
         if (first_touch && !backup_file(op, filename, ORIG_SUFFIX)) goto done;
         if (!backup_file(op, filename, BACKUP_SUFFIX)) goto done;
     }
-
-    /* 
-     * if no file exists, and this is our first time writing the x config, back
-     * up an empty file to use as the "original" backup.
-     */
-
-    else if (first_touch) {
-        char *fakeorig = nvstrcat(filename, ORIG_SUFFIX, NULL);
-        if (!copy_file("/dev/null", fakeorig, 0644)) {
-            nv_warning_msg("Unable to write an empty backup file \"%s\".",
-                           fakeorig);
-        }
-        free(fakeorig);
-    }
     
     /* write the config file */
 
